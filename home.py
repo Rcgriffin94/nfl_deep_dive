@@ -1,5 +1,3 @@
 import streamlit as st
-import functions
 
-### placeholder
-
+st.header("Home Page")
