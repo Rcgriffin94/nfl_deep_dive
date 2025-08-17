@@ -2,3 +2,4 @@
 dev.ipynb
 __pycache__/
 *.py[cod]
+export.csv

@@ -1,5 +1,6 @@
 import streamlit as st
 from functions import get_all_games
+import nfl_stats_plotly
 
 st.header("NFL Stats")
 st.set_page_config(page_title='NFL Stats', layout='wide')
@@ -32,10 +33,9 @@ st.header(f'Analyzing {len(all_games):,} games since {date_range_start.strftime(
 
 col3, col4 = st.columns(2)
 with col3:
-    st.write('Placeholder')
+    st.plotly_chart(nfl_stats_plotly.winning_pct(all_games))
 with col4:
     st.write('Placeholder')
-
 col5, col6 = st.columns(2)    
 with col5:
     st.write('Placeholder')

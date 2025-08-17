@@ -1,5 +1,6 @@
 import pandas as pd
 import datetime as dt
+import numpy as np
 
 def get_all_games():
 
@@ -11,6 +12,10 @@ def get_all_games():
         'stadium_id', 'surface', 'temp', 'total','week', 'weekday', 'wind']
 
     all_games = all_games[cols_to_keep]
+
+    all_games['winner'] = np.where(all_games['home_score'] > all_games['away_score'], all_games['home_team'],
+                            np.where(all_games['away_score'] > all_games['home_score'], all_games['away_team'], 'Tie'))
+
     all_games['gameday'] = pd.to_datetime(all_games['gameday']).dt.date
     all_games = all_games[all_games['gameday'] <= dt.date.today()]
     all_games.sort_values(['gameday', 'gametime'], ascending=False, inplace=True)
