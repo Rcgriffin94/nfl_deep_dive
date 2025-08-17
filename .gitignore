@@ -1,0 +1,4 @@
+.venv/
+dev.ipynb
+__pycache__/
+*.py[cod]
