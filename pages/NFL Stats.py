@@ -33,12 +33,12 @@ st.header(f'Analyzing {len(all_games):,} games since {date_range_start.strftime(
 
 col3, col4 = st.columns(2)
 with col3:
-    st.plotly_chart(nfl_stats_plotly.winning_pct(all_games))
+    st.plotly_chart(nfl_stats_plotly.team_winning_pct(all_games))
 with col4:
-    st.write('Placeholder')
+    st.plotly_chart(nfl_stats_plotly.qb_winning_pct(all_games))
 col5, col6 = st.columns(2)    
 with col5:
-    st.write('Placeholder')
+    st.plotly_chart(nfl_stats_plotly.avg_points_per_game(all_games))
 with col6:
     st.write('Placeholder')
 

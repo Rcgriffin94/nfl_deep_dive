@@ -15,6 +15,8 @@ def get_all_games():
 
     all_games['winner'] = np.where(all_games['home_score'] > all_games['away_score'], all_games['home_team'],
                             np.where(all_games['away_score'] > all_games['home_score'], all_games['away_team'], 'Tie'))
+    
+    all_games['winning_qb'] = np.where(all_games['winner'] == all_games['home_team'], all_games['home_qb_name'], all_games['away_qb_name'])
 
     all_games['gameday'] = pd.to_datetime(all_games['gameday']).dt.date
     all_games = all_games[all_games['gameday'] <= dt.date.today()]
