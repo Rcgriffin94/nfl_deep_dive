@@ -70,7 +70,8 @@ def qb_winning_pct(df):
 
     return fig
 
-def avg_points_per_game(df):
+def point_differential(df):
+
     home = df[['home_team', 'home_score', 'away_score']].copy()
     home.rename(columns={
         "home_team": "team",
@@ -105,5 +106,65 @@ def avg_points_per_game(df):
         yaxis_title='Point differential'
     )
 
-
     return fig
+
+def home_advantage(df):
+
+    home = df[['home_team', 'home_score', 'away_score', 'winner']].copy()
+    home.rename(columns={
+        "home_team": "team",
+        "home_score": "points_scored",
+        "away_score": "points_allowed"
+    }, inplace=True)
+
+    home["location"] = "home"
+    home["is_winner"] = home["team"] == home["winner"]
+
+    away = df[['away_team', 'away_score', 'home_score', 'winner']].copy()
+    away.rename(columns={
+        "away_team": "team",
+        "away_score": "points_scored",
+        "home_score": "points_allowed"
+    }, inplace=True)
+
+    away["location"] = "away"
+    away["is_winner"] = away["team"] == away["winner"]
+
+    games = pd.concat([home, away], ignore_index=True)
+
+    win_rates = (
+        games.groupby(["team", "location"])
+        .agg(
+            games_played=("is_winner", "count"),
+            wins=("is_winner", "sum")
+        )
+        .assign(win_pct=lambda x: x["wins"] / x["games_played"])
+        .reset_index()
+    )
+
+    home_field_advantage = (
+        win_rates.pivot(index="team", columns="location", values="win_pct")
+        .assign(advantage=lambda x: x["home"] - x["away"])
+        .sort_values("advantage", ascending=False)
+    )
+
+    fig = px.bar(
+        data_frame=home_field_advantage.reset_index(),
+        x='advantage',
+        y='team',
+        orientation="h",
+        text="advantage",
+        title="Home Field Advantage by Team",
+        labels={"advantage": "Win % Difference", "team": "Team"}
+    )
+
+    fig.update_layout(
+        yaxis=dict(autorange="reversed"),
+        xaxis_tickformat=".2%",
+    )
+
+    fig.update_traces(
+        hovertemplate="Team: %{y}<br>Advantage: %{x:.2%}<extra></extra>"  # clean hover
+    )
+
+    return  fig

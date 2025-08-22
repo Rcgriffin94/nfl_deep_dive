@@ -38,9 +38,9 @@ with col4:
     st.plotly_chart(nfl_stats_plotly.qb_winning_pct(all_games))
 col5, col6 = st.columns(2)    
 with col5:
-    st.plotly_chart(nfl_stats_plotly.avg_points_per_game(all_games))
+    st.plotly_chart(nfl_stats_plotly.point_differential(all_games))
 with col6:
-    st.write('Placeholder')
+    st.plotly_chart(nfl_stats_plotly.home_advantage(all_games))
 
 with st.expander(label="View raw data"):
     st.dataframe(all_games)

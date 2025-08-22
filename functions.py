@@ -7,7 +7,7 @@ def get_all_games():
     all_games = pd.read_csv('https://raw.githubusercontent.com/nflverse/nfldata/refs/heads/master/data/games.csv')
     cols_to_keep = ['away_coach', 'away_qb_id', 'away_qb_name',
         'away_score', 'away_team', 'div_game', 'game_id', 'game_type', 'gameday', 'gametime',
-        'home_coach', 'home_qb_id', 'home_qb_name', 'home_score', 'home_team', 'location',
+        'home_coach', 'home_qb_id', 'home_qb_name', 'home_score', 'home_team',
         'nfl_detail_id', 'overtime', 'referee', 'roof', 'season', 'stadium',
         'stadium_id', 'surface', 'temp', 'total','week', 'weekday', 'wind']
 
